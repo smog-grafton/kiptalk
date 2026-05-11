@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+content/uploads/
+content/themes/default/templates_compiled/
+includes/config.php
