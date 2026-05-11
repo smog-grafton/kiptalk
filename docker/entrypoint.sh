@@ -14,11 +14,18 @@ if [ "${KIPTALK_RESET_CONFIG:-false}" = "true" ]; then
   rm -f "$CONFIG_FILE"
 fi
 
+# Support both our APP_DB_* names and Coolify-style DB_* names.
+APP_DB_NAME="${APP_DB_NAME:-${DB_DATABASE:-}}"
+APP_DB_USER="${APP_DB_USER:-${DB_USERNAME:-}}"
+APP_DB_PASSWORD="${APP_DB_PASSWORD:-${DB_PASSWORD:-}}"
+APP_DB_HOST="${APP_DB_HOST:-${DB_HOST:-}}"
+APP_DB_PORT="${APP_DB_PORT:-${DB_PORT:-3306}}"
+
 if [ "${KIPTALK_USE_ENV_CONFIG:-false}" = "true" ]; then
-  : "${APP_DB_NAME:?APP_DB_NAME is required when KIPTALK_USE_ENV_CONFIG=true}"
-  : "${APP_DB_USER:?APP_DB_USER is required when KIPTALK_USE_ENV_CONFIG=true}"
-  : "${APP_DB_PASSWORD:?APP_DB_PASSWORD is required when KIPTALK_USE_ENV_CONFIG=true}"
-  : "${APP_DB_HOST:?APP_DB_HOST is required when KIPTALK_USE_ENV_CONFIG=true}"
+  : "${APP_DB_NAME:?APP_DB_NAME or DB_DATABASE is required when KIPTALK_USE_ENV_CONFIG=true}"
+  : "${APP_DB_USER:?APP_DB_USER or DB_USERNAME is required when KIPTALK_USE_ENV_CONFIG=true}"
+  : "${APP_DB_PASSWORD:?APP_DB_PASSWORD or DB_PASSWORD is required when KIPTALK_USE_ENV_CONFIG=true}"
+  : "${APP_DB_HOST:?APP_DB_HOST or DB_HOST is required when KIPTALK_USE_ENV_CONFIG=true}"
   : "${APP_URL:?APP_URL is required when KIPTALK_USE_ENV_CONFIG=true}"
 
   cat > "$CONFIG_FILE" <<EOF
@@ -27,7 +34,7 @@ define("DB_NAME", '${APP_DB_NAME}');
 define("DB_USER", '${APP_DB_USER}');
 define("DB_PASSWORD", '${APP_DB_PASSWORD}');
 define("DB_HOST", '${APP_DB_HOST}');
-define("DB_PORT", '${APP_DB_PORT:-3306}');
+define("DB_PORT", '${APP_DB_PORT}');
 define("SYS_URL", '${APP_URL}');
 define("URL_CHECK", ${APP_URL_CHECK:-true});
 define("DEBUGGING", ${APP_DEBUG:-false});
