@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libonig-dev \
+    default-mysql-client \
     libpng-dev \
     libwebp-dev \
     libxpm-dev \

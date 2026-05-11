@@ -5,6 +5,7 @@ APP_ROOT="/var/www/html"
 CONFIG_FILE="$APP_ROOT/includes/config.php"
 UPLOADS_DIR="$APP_ROOT/content/uploads"
 COMPILED_DIR="$APP_ROOT/content/themes/default/templates_compiled"
+DB_DUMP_FILE="${DB_DUMP_FILE:-$APP_ROOT/u636854834_kiptalk_new.sql}"
 
 mkdir -p "$UPLOADS_DIR" "$COMPILED_DIR"
 chown -R www-data:www-data "$UPLOADS_DIR" "$COMPILED_DIR"
@@ -44,6 +45,32 @@ EOF
 
   chown www-data:www-data "$CONFIG_FILE"
   chmod 640 "$CONFIG_FILE"
+fi
+
+if [ "${KIPTALK_IMPORT_SQL_DUMP:-false}" = "true" ]; then
+  : "${APP_DB_NAME:?APP_DB_NAME or DB_DATABASE is required when KIPTALK_IMPORT_SQL_DUMP=true}"
+  : "${APP_DB_USER:?APP_DB_USER or DB_USERNAME is required when KIPTALK_IMPORT_SQL_DUMP=true}"
+  : "${APP_DB_PASSWORD:?APP_DB_PASSWORD or DB_PASSWORD is required when KIPTALK_IMPORT_SQL_DUMP=true}"
+  : "${APP_DB_HOST:?APP_DB_HOST or DB_HOST is required when KIPTALK_IMPORT_SQL_DUMP=true}"
+
+  if [ -f "$DB_DUMP_FILE" ]; then
+    if ! mysql \
+      --host="$APP_DB_HOST" \
+      --port="$APP_DB_PORT" \
+      --user="$APP_DB_USER" \
+      --password="$APP_DB_PASSWORD" \
+      --database="$APP_DB_NAME" \
+      --batch --skip-column-names \
+      -e "SHOW TABLES LIKE 'system_options';" | grep -q '^system_options$'; then
+      mysql \
+        --host="$APP_DB_HOST" \
+        --port="$APP_DB_PORT" \
+        --user="$APP_DB_USER" \
+        --password="$APP_DB_PASSWORD" \
+        --database="$APP_DB_NAME" \
+        < "$DB_DUMP_FILE"
+    fi
+  fi
 fi
 
 exec "$@"
