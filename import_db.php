@@ -53,6 +53,27 @@ if (!$force && $tableExistsResult && $tableExistsResult->num_rows > 0) {
     exit('Database already initialized');
 }
 
+$tables = [];
+$tablesResult = $mysqli->query('SHOW TABLES');
+if ($tablesResult) {
+    while ($row = $tablesResult->fetch_array(MYSQLI_NUM)) {
+        $tables[] = $row[0];
+    }
+    $tablesResult->free();
+}
+
+if ($force || !empty($tables)) {
+    $mysqli->query('SET FOREIGN_KEY_CHECKS=0');
+    foreach ($tables as $table) {
+        $escapedTable = str_replace('`', '``', $table);
+        if (!$mysqli->query("DROP TABLE IF EXISTS `{$escapedTable}`")) {
+            http_response_code(500);
+            exit('Failed to drop existing table ' . $table . ': ' . $mysqli->error);
+        }
+    }
+    $mysqli->query('SET FOREIGN_KEY_CHECKS=1');
+}
+
 $sql = file_get_contents($dumpFile);
 if ($sql === false) {
     http_response_code(500);
