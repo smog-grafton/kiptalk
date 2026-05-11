@@ -59,6 +59,10 @@ if ($sql === false) {
     exit('Unable to read SQL dump');
 }
 
+/* Normalize MariaDB 11 collations to values supported by MySQL 8 / older MariaDB */
+$sql = str_replace('utf8mb3_uca1400_ai_ci', 'utf8mb3_general_ci', $sql);
+$sql = str_replace('utf8mb4_uca1400_ai_ci', 'utf8mb4_unicode_ci', $sql);
+
 if (!$mysqli->multi_query($sql)) {
     http_response_code(500);
     exit('SQL import failed: ' . $mysqli->error);
