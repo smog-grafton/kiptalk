@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libzip-dev \
     libmagickwand-dev \
     imagemagick \
+    nodejs \
+    npm \
     unzip \
     curl \
     msmtp-mta \
@@ -32,6 +34,8 @@ COPY docker/entrypoint.sh /usr/local/bin/kiptalk-entrypoint
 RUN chmod +x /usr/local/bin/kiptalk-entrypoint
 
 COPY . /var/www/html
+
+RUN npm install --omit=dev
 
 ENTRYPOINT ["kiptalk-entrypoint"]
 CMD ["apache2-foreground"]

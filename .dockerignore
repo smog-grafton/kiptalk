@@ -1,8 +1,6 @@
 .DS_Store
 .git
 .gitignore
-node_modules
 docker/docker-compose.yml
-content/uploads
 content/themes/default/templates_compiled
 includes/config.php
