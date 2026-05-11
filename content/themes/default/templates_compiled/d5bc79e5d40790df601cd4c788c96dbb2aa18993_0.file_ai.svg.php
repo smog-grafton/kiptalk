@@ -1,0 +1,31 @@
+<?php
+/* Smarty version 5.8.0, created on 2026-05-08 09:51:56
+  from 'file:/home/u636854834/domains/kiptalk.com/public_html/content/themes/default/templates/../images/svg/ai.svg' */
+
+/* @var \Smarty\Template $_smarty_tpl */
+if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
+  'version' => '5.8.0',
+  'unifunc' => 'content_69fdb23c9ce806_49830611',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    'd5bc79e5d40790df601cd4c788c96dbb2aa18993' => 
+    array (
+      0 => '/home/u636854834/domains/kiptalk.com/public_html/content/themes/default/templates/../images/svg/ai.svg',
+      1 => 1778233710,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+))) {
+function content_69fdb23c9ce806_49830611 (\Smarty\Template $_smarty_tpl) {
+$_smarty_current_dir = '/home/u636854834/domains/kiptalk.com/public_html/content/themes/default/images/svg';
+echo '<?'; ?>
+xml version="1.0" encoding="utf-8"<?php echo '?>'; ?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path style="fill: none !important;" d="M12 3C12 7.97056 16.0294 12 21 12C16.0294 12 12 16.0294 12 21C12 16.0294 7.97056 12 3 12C7.97056 12 12 7.97056 12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg><?php }
+}
