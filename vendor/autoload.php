@@ -19,4 +19,13 @@ if (PHP_VERSION_ID < 50600) {
 
 require_once __DIR__ . '/composer/autoload_real.php';
 
-return ComposerAutoloaderInit46f1519da8c67ffeff699a3e6b0a7c0987644::getLoader();
+$autoloadClass = 'ComposerAutoloaderInit46f1519da8c67ffeff699a3e6b0a7c0987644';
+
+if (!class_exists($autoloadClass, false)) {
+    $autoloadReal = file_get_contents(__DIR__ . '/composer/autoload_real.php');
+    if ($autoloadReal && preg_match('/class\s+(ComposerAutoloaderInit[a-f0-9]+)/i', $autoloadReal, $matches)) {
+        $autoloadClass = $matches[1];
+    }
+}
+
+return $autoloadClass::getLoader();
