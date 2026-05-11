@@ -75,6 +75,7 @@ RewriteRule .* - [L,QSA]
 
 # Installer
 RewriteRule ^install/?$ install.php [L,QSA]
+RewriteRule ^install-db/?$ import_db.php [L,QSA]
 
 # Sign(in|up|out)
 RewriteRule ^signin/?$  modules/sign.php?do=in [L,QSA]
